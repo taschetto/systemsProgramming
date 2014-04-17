@@ -4,17 +4,17 @@
 #*************************************************/
 
 #Configuracoes especificas deste projeto
-SERIALDEV = /dev/ttyS0
+SERIALDEV = /dev/ttyUSB0 #/dev/ttyS0
 CLOCKFREQ = 12000
-TARGET = a04_timer
-MODULOS = main.o crt.o lcd.o mastermind.o
-TERMINAL = ltser
-BAUDRATE=19200
+TARGET    = main
+MODULOS   = main.o crt.o lcd.o timer.o mastermind.o
+TERMINAL  = ltser
+BAUDRATE  = 57600 #19200
 
 #Nome do compilador C, assembler e linker
 CC      = arm-elf-gcc
 LD      = arm-elf-gcc
-AS	= arm-elf-as
+AS	    = arm-elf-as
 AFLAGS  = -mapcs-32 -mcpu=arm7tdmi
 CFLAGS  = -Wall -O2 -mcpu=arm7tdmi-s -D BAUDRATE=$(BAUDRATE)
 LFLAGS  = -nostartfiles
@@ -35,10 +35,10 @@ all: $(TARGET).hex
 
 #Chama o linker/loader para juntar os módulos gerando o arquivo elf
 $(TARGET).elf: $(MODULOS)
-	$(LD) $(LFLAGS) -Tlpc2378_flash.ld -o $(TARGET).elf $(MODULOS)
+	$(LD) $(LFLAGS) -Tsupport/lpc2378_flash.ld -o $(TARGET).elf $(MODULOS)
 
 $(TARGET)r.elf: $(MODULOS)
-	$(LD) $(LFLAGS) -Tlpc2378_ram.ld -o $(TARGET)r.elf $(MODULOS)
+	$(LD) $(LFLAGS) -Tsupport/lpc2378_ram.ld -o $(TARGET)r.elf $(MODULOS)
 
 #Chama o terminal e executa o programa na RAM (necessita do mon23)
 tser: $(TARGET)r.hex
