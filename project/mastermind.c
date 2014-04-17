@@ -1,41 +1,83 @@
-#include <stdio.h>
 #include "mastermind.h"
+#include "lcd.h"
 
-void readPassword(byte password[])
+void init()
 {
-  int i;
-  for (i = 0; i < PASSWORD_SIZE; i++)
+  initTimer();
+
+  FIO4DIR = 0xFF;
+  FIO4CLR = 0xFF;
+
+  LCDinit();
+  LCDcommand(0x80);
+  LCDputs("Mastermind by GT");
+  LCDcommand(0xC4);
+  LCDputs("SW1: begin");
+
+  for (;;)  
   {
-    printf("password[%d]: ", i);
-    scanf(" %c", &password[i]);
+    wait(50);
+    if (!(FIO4PIN & 0x100))
+      break;
   }
 }
 
-int check(byte password[], byte guess[], char feedback[])
+void readPassword(char password[])
 {
-  int i, j;
-  int result = 1;
-  
-  for (i = 0; i < PASSWORD_SIZE; i++)
+  LCDcommand(0x01);
+  LCDcommand(0x80);
+  LCDputs("Password:");
+
+  for (;;)
   {
-    if (password[i] != guess[i])
-      result = 0;
+    wait(50);
+    LCDcommand(0xC0);
+    LCDputs(password);
 
-    for (j = 0; j < PASSWORD_SIZE; j++)
-    {
-      if (guess[i] == password[j])
-      {
-        if (i == j)
-          feedback[i] = '*';
-        else
-          feedback[i] = '?';
-
-        break;
-      }
-      else
-        feedback[i] = 'X';
-    }
+    if (!(FIO4PIN) & 0x500)
+      break;
   }
 
-  return result;
+/*    if (!(FIO4PIN) & 0x200)
+    {
+      password[1]++;
+      if (password[1] > '9')
+        password[1] = '9';
+    }
+
+    if (!(FIO4PIN) & 0x300)
+    {
+      password[2]++;
+      if (password[2] > '9')
+        password[2] = '9';
+    }
+
+    if (!(FIO4PIN) & 0x400)
+    {
+      password[3]++;
+      if (password[3] > '9')
+        password[3] = '9';
+    }
+
+    if (!(FIO4PIN) & 0x500)
+    {
+      break;
+    }*/
+}
+
+int checkPassword(char password[], char guess[], char feedback[])
+{
+  return 1;
+}
+
+void showFeedback(char feedback[])
+{
+}
+
+void loser()
+{
+}
+
+void winner()
+{
 }
