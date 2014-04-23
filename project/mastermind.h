@@ -1,3 +1,9 @@
+/*
+  Guilherme Taschetto (c) 2014
+
+  All rights reserved.
+*/
+
 #ifndef __MASTERMIND_H__
 #define __MASTERMIND_H__
 

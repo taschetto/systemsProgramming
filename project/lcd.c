@@ -1,3 +1,9 @@
+/*
+  Guilherme Taschetto (c) 2014
+
+  All rights reserved.
+*/
+
 #include "lcd.h"
 
 void wait(unsigned int t)

@@ -1,3 +1,9 @@
+/*
+  Guilherme Taschetto (c) 2014
+
+  All rights reserved.
+*/
+
 #ifndef __LCD_H__
 #define __LCD_H__
 

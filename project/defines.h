@@ -1,3 +1,9 @@
+/*
+  Guilherme Taschetto (c) 2014
+
+  All rights reserved.
+*/
+
 #ifndef __DEFINES_H__
 #define __DEFINES_H__
 

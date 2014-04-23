@@ -1,3 +1,9 @@
+/*
+  Guilherme Taschetto (c) 2014
+
+  All rights reserved.
+*/
+
 #include <arch/nxp/lpc23xx.h>
 #include "mastermind.h"
 #include "defines.h"

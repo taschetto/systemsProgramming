@@ -1,3 +1,9 @@
+/*
+  Guilherme Taschetto (c) 2014
+
+  All rights reserved.
+*/
+
 #include <stdio.h>
 #include "lcd.h"
 #include "mastermind.h"
