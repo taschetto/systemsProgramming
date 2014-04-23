@@ -5,12 +5,11 @@
 
 int main()
 {
-  init();
-
   char password[] = "1234";
   char guess[]    = "0000";
   char feedback[2];
 
+  init();
   readPassword("Set password:", password);
 
   int win = 0, i;
@@ -24,13 +23,9 @@ int main()
   }
 
   if (win)
-  {
     winner();
-  }
   else
-  {
     loser();
-  }
 
   return 0;
 }
