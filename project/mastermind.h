@@ -2,10 +2,10 @@
 #define __MASTERMIND_H__
 
 void init();
-void readPassword(char password[]);
+void readPassword(char label[], char password[]);
 void inc(char* c);
-int checkPassword(char password[], char guess[], char feedback[]);
-void showFeedback(char feedback[]);
+int checkPassword(char password[], char guess[], char feedback[2]);
+void showFeedback(char feedback[2]);
 void loser();
 void winner();
 

@@ -1,43 +1,53 @@
-#include <arch/nxp/lpc23xx.h>
-#include "defines.h"
 #include "lcd.h"
-#include "timer.h"
+
+void wait(unsigned int t)
+{
+    unsigned int tf;
+    tf = T0TC + t;		// tf = Valor futuro do T0TC
+    while (tf != T0TC);		// wait ate que tf==T0TC
+}
 
 void LCDcommand(int c)
 {
-  FIO3DIR |= LCD_D;
-  FIO3PIN |= c;
-  FIO2CLR |= LCD_RS;		
-  FIO2SET |= LCD_EN;
-  wait(20);
-  FIO2CLR |= LCD_EN;
-  wait(20);
+    FIO3PIN0 = c;
+    FIO4CLR = LCD_RS;		
+    FIO4SET = LCD_E;
+    FIO4CLR = LCD_E;
+    wait(20);
 }
 
 void LCDputchar(int c)
 {
-  FIO3DIR |= LCD_D;
-  FIO3PIN = c;
-  FIO2SET = LCD_RS;
-  FIO2SET = LCD_EN;
-  wait(20);
-  FIO2CLR = LCD_EN;
-  wait(20);
+    FIO3PIN0 = c;
+    FIO4SET = LCD_RS;
+    FIO4SET = LCD_E;
+    FIO4CLR = LCD_E;
+    wait(8);
 }
 
 void LCDinit(void)
 {
-  FIO2DIR |= LCD_EN | LCD_RS;
-  FIO2CLR |= LCD_EN;
-  wait(20);
-  LCDcommand(0x38);
-  LCDcommand(0x01);
-  LCDcommand(0x0C);
-  LCDcommand(0x80);
+    FIO3DIR |= 0xff;		
+    FIO4DIR |= LCD_E | LCD_RS;	
+    wait(20);
+    LCDcommand(0x38);		
+    LCDcommand(1);		
+    LCDcommand(0x0c);		
 }
 
-void LCDputs(char *s)
+void LCDputs(char *txt)
 {
-  while (*s)
-	  LCDputchar(*s++);
+  while (*txt)
+	  LCDputchar(*txt++);
 }
+
+void initTimer()
+{
+    PCONP |= 2;			
+    PCLKSEL0 = (PCLKSEL0 & (~0x0c)) | 0x04;
+    T0TCR = 0;			
+    T0PR = CCLK / 1000 - 1;	
+    T0TCR = 2;			
+    T0TCR = 1;			
+}
+

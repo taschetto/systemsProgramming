@@ -1,46 +1,40 @@
-#include "mastermind.h"
-#include <arch/nxp/lpc23xx.h>
-#include "defines.h"
+#include <stdio.h>
 #include "lcd.h"
-#include "timer.h"
+#include "mastermind.h"
+#include "defines.h"
 
 int main()
 {
-  char password[PASSWORD_SIZE] = "1234";
-  char guess[PASSWORD_SIZE]    = "0000";
-  char feedback[PASSWORD_SIZE] = "????";
-
   init();
 
-  FIO2CLR |= 0xFF;
+  char password[] = "1234";
+  char guess[]    = "0000";
+  char feedback[2];
 
-  while (1)
+  readPassword("Set password:", password);
+
+  int win = 0, i;
+  for (i = 0; i < TRIES; i++)
   {
-  }
-
-  readPassword(password);
-
-  int i;
-  for (i = 0; i < PASSWORD_SIZE; i++)
-  {
-    readPassword(guess);
+    readPassword("Guess:", guess);
     
-    if (checkPassword(password, guess, feedback)) break;
+    if (checkPassword(password, guess, feedback)) { win = 1; break; }
 
     showFeedback(feedback);
   }
 
-  if (i == TRIES)
+  if (win)
   {
-    loser();
+    winner();
   }
   else
   {
-    winner();
+    loser();
   }
 
   return 0;
 }
+
 
 void UNDEF_Routine()
 {

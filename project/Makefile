@@ -4,17 +4,17 @@
 #*************************************************/
 
 #Configuracoes especificas deste projeto
-SERIALDEV = /dev/ttyUSB0 #/dev/ttyS0
+SERIALDEV = /dev/ttyS0
 CLOCKFREQ = 12000
-TARGET    = main
-MODULOS   = main.o crt.o lcd.o timer.o mastermind.o
-TERMINAL  = ltser
-BAUDRATE  = 57600 #19200
+TARGET = mastermind
+MODULOS = main.o crt.o lcd.o mastermind.o
+TERMINAL = ltser
+BAUDRATE=19200
 
 #Nome do compilador C, assembler e linker
 CC      = arm-elf-gcc
 LD      = arm-elf-gcc
-AS	    = arm-elf-as
+AS	= arm-elf-as
 AFLAGS  = -mapcs-32 -mcpu=arm7tdmi
 CFLAGS  = -Wall -O2 -mcpu=arm7tdmi-s -D BAUDRATE=$(BAUDRATE)
 LFLAGS  = -nostartfiles
