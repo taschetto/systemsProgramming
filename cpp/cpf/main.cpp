@@ -3,7 +3,7 @@
 
 int main()
 {
-  Pessoa p1("Guilherme Taschetto", "011.141.170-05");
+  Pessoa p1("Guilherme Taschetto", "000.000.000-00");
   std::cout << p1.getCPF() << endl;
   std::cout << p1.calcDV1() << endl;
   return 0;
